@@ -26,7 +26,7 @@ $(document).ready(function(){
         $(this).animate({opacity:0},"slow");
       });
       audioElement.play()
-      // if(submarine === true){$("#sub").css("text-decoration", "line-through");}
+      if(submarine === true){$("#sub").css("text-decoration", "line-through");}
       hits++;
       // $(this).addClass("hit");
       if (hits === 24){
@@ -193,10 +193,10 @@ function callShip() {
         }
       }
     }
-    // if(ship.length === 1){
-    //   submarine = ship[row][column];
-    //   return submarine;
-    // }
+    if(ship.length === 1){
+      submarine = [row, column];
+      return submarine;
+    }
   }
 }
 
