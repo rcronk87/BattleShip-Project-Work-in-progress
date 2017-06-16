@@ -9,47 +9,74 @@ $(document).ready(function(){
     var split = $(this).attr('class').split("");
     var row = split[0];
     var column = split[1];
+    var audioElement = document.createElement('audio');
+    audioElement.setAttribute('src', 'http://soundbible.com/mp3/Depth%20Charge%20Short-SoundBible.com-1303947570.mp3');
+    var audioElementSplash = document.createElement('audio');
+    audioElementSplash.setAttribute('src',"http://soundbible.com/mp3/Video_Game_Splash-Ploor-699235037.mp3");
     console.log(split);
     //checks for a hit and changes color to red
     if (board[row][column] === 1) {
-      console.log('HIT!');
-      hits++;
       $(this).css("background-color", "red");
+      // var editid;
+      // editid = $(this).attr("class");
+      $(this).append("<span>Hit</span>")
+      $("span").css({"font-size": "150%"});
+      $(".board").effect("shake");
+      $("span").animate({opacity:1},"slow","linear",function(){
+        $(this).animate({opacity:0},"slow");
+      });
+      audioElement.play()
+      // if(submarine === true){$("#sub").css("text-decoration", "line-through");}
+      hits++;
       // $(this).addClass("hit");
-      if (hits === 5){
-        console.log("You win!");
+      if (hits === 24){
+        $("div").hide()
+        $("#winLose").text("You win!");
       }
     }
     //checks for a miss and changes color to blue
     else{
       console.log("MISS!");
       $(this).css("background-color", "#00c0ff");
-      if(torpedos === 0){
-        console.log("You lose!!");
+      $(this).animate({
+    color: "#00c0ff",
+    backgroundColor: "blue"});
+    audioElementSplash.play()
+      if(torpedos == 0){
+        $("#torpedos").hide()
+        $("#winLose").text("You lose!!");
         $(".shipLocation").css("border-color", "red");
+        $("td").off("click");
       }
     }
       $("#torpedos").text("Torpedos Remaining: " + torpedos--);
-      $(this).off("click");
   });
 });
 
 // This is the model
 // fucntion to makle the table 10 x 10
-var torpedos = 0;
-var hits;
+var torpedos = 25;
+var hits = 0
 var board = [[0], [0], [0], [0], [0], [0], [0], [0], [0], [0]];
 //array of different ship lengths
- const ships = [5, 4, 4, 3, 3, 2, 2, 1];
+const ships = [5, 4, 4, 3, 3, 2, 2, 1];
+var carrier;
+var battleship;
+var battleship2;
+var cruiser;
+var cruiser2;
+var destroyer;
+var destroyer2;
+var submarine;
 function tableLoop() {
-  var table = $("<table> </table>");
+  var table = $("<table class='battleShits'> </table>");
   // loop to make rows
   for (i = 0; i < 10; i++) {
     var row = $("<tr></tr>").addClass([i]);
     $(table).append(row);
     // loop to make 100 td
       for (var j = 0; j < 10; j++) {
-        var stuff = $("<td></td>").addClass([i] + [j]);
+        var stuff = $('<td> </td>').addClass([i] + [j]);
         $(row).append(stuff);
       }
   }
@@ -78,8 +105,6 @@ function callShip() {
       var column = Math.floor(Math.random() * 10);
       var row = Math.floor(Math.random() * 10);
       // if
-      console.log("row is " + row);
-      console.log("column is " + column);
     } while (board[row][column] === 1);
     //calculate vertical or horizontal
     var direction = Math.floor(Math.random() * 2);
@@ -108,7 +133,7 @@ function callShip() {
         for(j=0; j<ship; j++){
           board[row - j][column]  = 1;
           var pop = "." + (row - j) + column;
-          $(pop).addClass('shipLocation');
+          $(pop).addClass('shipLocation')
         }
         //when checking for fitment if it overflows the edge, go the opposite direction
       }else{
@@ -164,10 +189,14 @@ function callShip() {
           board[row][column + j]  = 1;
           pop = "." + row + (column + j);
           $(pop).addClass('shipLocation');
+
         }
       }
     }
-  console.log(board);
+    // if(ship.length === 1){
+    //   submarine = ship[row][column];
+    //   return submarine;
+    // }
   }
 }
 

@@ -6,16 +6,47 @@
     src="https://code.jquery.com/jquery-3.2.1.min.js"
     integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
     crossorigin="anonymous"></script>
+    <script
+  src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"
+  integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E="
+  crossorigin="anonymous"></script>
       <script type="text/javascript" src="battleships.js">
       </script>
     </script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="battleships.css">
     <title>Battleships</title>
   </head>
   <body>
-    <h1>battleships</h1>
-    <div class="board">
+    <div class="container-fluid">
+      <div class="jumbotron">
+        <h1>Battleships</h1>
+      </div>
+      <div class="row">
+        <div class="board col-sm-8">
+        </div>
+        <div class="score col-sm-4">
+        </div>
+              <ul>
+                <h2 class="header">Ships Remaining</h2>
+                <li>Carrier</li>
+                <li>Battleship</li>
+                <li>Battleship2</li>
+                <li>Cruiser</li>
+                <li>Cruiser2</li>
+                <li>Destroyer</li>
+                <li>Destroyer2</li>
+                <li id="sub">Submarine</li>
+              </ul>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+      <p id="torpedos">Torpedos Remaining: 25</p>
+        </div>
+      </div>
     </div>
-    <p id="torpedos">Torpedos Remaining: 25</p>
+    <p id="winLose">
+
+    </p>
   </body>
 </html>

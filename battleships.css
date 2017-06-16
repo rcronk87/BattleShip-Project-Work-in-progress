@@ -1,8 +1,50 @@
-table {
-  border: 10px solid black;
-  width: 300px;
-  height: 300px;
+.battleShits {
+  border: 3px solid grey;
+  width: 40em;
+  height: 40em;
+  border-collapse: collapse;
 }
 td {
-  border: 5px solid black;
+  border: 3px solid grey;
+  height: 34px;
+  width: 34px;
+  text-align: center;
+}
+h1{
+  text-align: center;
+}
+p{
+  text-align: center;
+}
+
+#torpedos {
+  font-size: 35pt
+}
+
+.score {
+  text-align: center;
+
+}
+
+.jumbotron {
+  background-size: cover;
+  background-position: center;
+  background-image: url("http://img07.deviantart.net/66d6/i/2014/051/e/3/big_rubber_duck_by_tommy830219-d778t1n.jpg");
+  background-repeat:no-repeat;
+}
+li {
+    list-style-type: none;
+    text-align:left;
+    font-size: 30pt;
+}
+
+h2 {
+  font-size: 40pt;
+  text-decoration: underline;
+}
+
+#winLose {
+  font-size: 35pt;
+  color: red;
+
 }
