@@ -11,7 +11,7 @@ $(document).ready(function(){
     var column = split[1];
     console.log(split);
     //checks for a hit and changes color to red
-    if (board[row][column] === ship) {
+    if (board[row][column] === 1) {
       console.log('HIT!');
       hits++;
       $(this).css("background-color", "red");
@@ -39,7 +39,8 @@ $(document).ready(function(){
 var torpedos = 0;
 var hits;
 var board = [[0], [0], [0], [0], [0], [0], [0], [0], [0], [0]];
-const ship = 1
+//array of different ship lengths
+ const ships = [5, 4, 4, 3, 3, 2, 2, 1];
 function tableLoop() {
   var table = $("<table> </table>");
   // loop to make rows
@@ -55,6 +56,7 @@ function tableLoop() {
   // adding table to html
   $(".board").append(table);
 }
+//makes the board model
 function boardData() {
   for(var i= 0; i < 10; i++) {
     for(var j=1; j < 10; j++){
@@ -68,71 +70,119 @@ function boardData() {
  **/
  var counter = 0
 function callShip() {
-    for (var i=0; i<5; i++){
-    // Do-while loop for the random numbers while board position is equal to 1
+  //loops through different ships
+  for (var i=0; i<ships.length; i++){
+    var ship = ships[i];
+    // Do-while loop for the random numbers while there in another ship
     do {
       var column = Math.floor(Math.random() * 10);
       var row = Math.floor(Math.random() * 10);
       // if
       console.log("row is " + row);
       console.log("column is " + column);
-    } while (board[row][column] === 1)
-    board[row][column]  = ship;
-    checkSpace(row, column)
-    console.log(counter)
-    var pop = "." + row + column;
-    $(pop).addClass('shipLocation');
+    } while (board[row][column] === 1);
+    //calculate vertical or horizontal
+    var direction = Math.floor(Math.random() * 2);
+    //checks for surrounding ships
+    var shipPositionWorks;
+    //if direction is vertical
+    if(direction === 0){
+      //when checking for fitment if it overflows the edge, go the opposite direction
+      if(row + ship > 9){
+        //checking each spot for ship placement
+        for(j=0; j<ship; j++){
+          console.log('J: ', row - j);
+          //checks for space around
+          shipPositionWorks = checkSpace(row - j, column);
+          //if there are ships around, stop running the loop
+          if(shipPositionWorks === true){
+            break;
+          }
+        }
+        //if there are ships around, find another starting coordinate
+        if(shipPositionWorks === true){
+          i--;
+          continue;
+        }
+        //if there are no ships around place the ship
+        for(j=0; j<ship; j++){
+          board[row - j][column]  = 1;
+          var pop = "." + (row - j) + column;
+          $(pop).addClass('shipLocation');
+        }
+        //when checking for fitment if it overflows the edge, go the opposite direction
+      }else{
+        for(j=0; j<ship; j++){
+          console.log('J2: ', row + j);
+          shipPositionWorks = checkSpace(row + j, column);
+          if(shipPositionWorks === true){
+            break;
+          }
+        }
+        if(shipPositionWorks === true){
+          i--;
+          continue;
+        }
+        for(j=0; j<ship; j++){
+          board[row + j][column]  = 1;
+          var pop = "." + (row + j) + column;
+          $(pop).addClass('shipLocation');
+        }
+      }
+    }
+    else{
+      if(column + ship > 9){
+        for(j=0; j<ship; j++){
+          console.log('J3: ', column - j);
+          shipPositionWorks = checkSpace(row, column - j);
+          if(shipPositionWorks === true){
+            break;
+          }
+        }
+        if(shipPositionWorks === true){
+          i--;
+          continue;
+        }
+        for(j=0; j<ship; j++){
+          board[row][column - j]  = 1;
+          pop = "." + row + (column - j);
+          $(pop).addClass('shipLocation');
+        }
+      }else{
+        for(j=0; j<ship; j++){
+          console.log('J4: ', column + j);
+          shipPositionWorks = checkSpace(row, column + j);
+          if(shipPositionWorks === true){
+            break;
+          }
+        }
+        if(shipPositionWorks === true){
+          i--;
+          continue;
+        }
+        for(j=0; j<ship; j++){
+          board[row][column + j]  = 1;
+          pop = "." + row + (column + j);
+          $(pop).addClass('shipLocation');
+        }
+      }
     }
   console.log(board);
+  }
 }
 
-// function checkSpace(row, column) {
-//   var negativeRow = row
-//   var negativeColumn = column
-//   var positiveRow = row
-//   var positiveColumn = column
-//   if (row - 1 === -1 ){
-//     negativeRow = 1
-//   }
-//   if (row + 1 === 10) {
-//     positiveRow = 8
-//   }
-//   if (column - 1 === -1) {
-//     negativeColumn = 1
-//   }
-//   if (column + 1 === 10) {
-//     positiveColumn = 8
-//   }
-//   console.log(column)
-//   console.log(row)
-//   return (board[negativeRow][positiveColumn] === 0 &&
-//           board[negativeRow][column] === 0 &&
-//           board[positiveRow][positiveColumn] === 0 &&
-//           board[row][positiveColumn] === 0 &&
-//           board[positiveRow][negativeColumn] === 0 &&
-//           board[negativeRow][negativeColumn] === 0 &&
-//           board[positiveRow][column] === 0 &&
-//           board[row][negativeColumn] === 0
-//         )
-// }
-var position = [] // makes this global to keep information constant/outside of loop
-
+//checks for space around each position around and allows for placement on edges
 function checkSpace(row, column){
-  // check new location against existing array
-  // indexOf method to check for existing values
-  if(position.indexOf(new location) >=0 // then exisits )
-
-  // find positions around new location
-  // positions push row -1 row +1
-  position[]
-
-  // for (var k = row-1; k<row+2; k++){
-  //   console.log("row position " + k)
-  //   for(var l= column-1; l<column+2; l++){
-  //     console.log("column position " + l)
-  //     if(board[row][column] === board[k][l]){
-  //       console.log("false");
-  //     }
-  //   }
-  // }
+    for (var k = row-1; k<row+2; k++){
+      //console.log("row position " + k);
+      for(var l= column-1; l<column+2; l++){
+        //console.log("column position " + l);
+        if (k >= 0 && k <= 9 && l >= 0 && l <= 9) {
+          if(board[k][l] === 1){
+            return true;
+          }
+        }
+      }
+  }
+  return false;
 }
